@@ -13,19 +13,19 @@
     <link rel="icon" type="image/png" href="logo.png">
 
     <!-- WhatsApp / Facebook / Social Media -->
-    <meta property="og:title" content="The Living Voices Birthday Tracker">
-    <meta property="og:description" content="We'll never miss celebrating your special day! Submit your birthday for the RCCG Living Water Parish Choir.">
+    <meta property="og:title" content="The Living Voices Profile/Birthday Tracker">
+    <meta property="og:description" content="We'll never miss celebrating your special day! Submit your details for the RCCG Living Water Parish Choir.">
     <meta property="og:image" content="https://livingvoicesbirthday.netlify.app/logo.png">
     <meta property="og:url" content="https://livingvoicesbirthday.netlify.app">
     <meta property="og:type" content="website">
 
     <!-- Twitter/X and blogs -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="The Living Voices Birthday Tracker">
-    <meta name="twitter:description" content="We'll never miss celebrating your special day! Submit your birthday for the RCCG Living Water Parish Choir.">
+    <meta name="twitter:title" content="The Living Voices Profile/Birthday Tracker">
+    <meta name="twitter:description" content="We'll never miss celebrating your special day! Submit your details for the RCCG Living Water Parish Choir.">
     <meta name="twitter:image" content="https://livingvoicesbirthday.netlify.app/logo.png">
     
-    <title>The Living Voices - Birthday Tracker</title>
+    <title>The Living Voices - Choir Hub</title>
     <style>
         * {
             margin: 0;
@@ -543,26 +543,26 @@
         <div class="hero-section">
             <!-- Left Side - Phone Mockup Placeholder -->
             <div class="mockup-container">
-                <img src="mockup3.png" alt="Birthday Tracker App" style="width: 100%; max-width: 500px; filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.15));">
+                <img src="mockup3.jpeg" alt="Birthday Tracker App" style="width: 100%; max-width: 500px; filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.15));">
             </div>
 
             <!-- Right Side - Content -->
             <div class="content-container">
                 <h1 class="main-heading">
                     <span class="highlight">Living Voices</span><br>
-                    Birthday Tracker
+                    Choir Hub 🎼
                 </h1>
                 
                 <p class="subtitle">
-                    We'll never miss celebrating your special day cos you're special to us😊.  
-                    Please input your birthday so Bro Tomiwa won't forget.
+                    We'll never miss celebrating you cos you're special to us.  
+                    Please input your birthday so Bro Tomiwa won't forget 😂.
                 </p>
 
                 <p class="tagline">Courtesy: The RCCG Living Water Parish Choir Excos.</p>
 
                 <div class="action-buttons">
                     <button class="btn btn-primary" onclick="openModal('submit')">
-                        🎂 Submit Your Birthday
+                        ✔️ Submit Your Profile Details
                     </button>
                     <button class="btn btn-secondary" onclick="openModal('admin')">
                         🔐 Admin Dashboard
@@ -591,17 +591,31 @@
         </div>
     </div>
 
-    <!-- Submit Birthday Modal -->
+    <!-- Submit Profile Modal -->
     <div id="submit-modal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal('submit')">×</button>
-            <h2 class="modal-title">Submit Your Birthday 🎂</h2>
+            <h2 class="modal-title">Submit Your Profile Details 🎂</h2>
             <p class="modal-subtitle">Help us celebrate you as part of The Living Voices family!</p>
             
             <form id="birthday-form">
                 <div class="form-group">
                     <label for="name">Full Name</label>
                     <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender" required style="width:100%;padding:14px 18px;border:2px solid #e9ecef;border-radius:10px;font-size:16px;font-family:inherit;transition:all 0.3s;background:white;">
+                        <option value="">Select gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact">Contact Details (Phone / WhatsApp)</label>
+                    <input type="text" id="contact" name="contact" required placeholder="e.g. 08012345678">
                 </div>
                 
                 <div class="form-group">
@@ -610,12 +624,12 @@
                 </div>
                 
                 <button type="submit" class="btn btn-primary" style="width: 100%;">
-                    Submit Birthday
+                    Submit Profile Details ✔️
                 </button>
             </form>
             
             <div id="success-message" class="success-message">
-                ✓ Thank you! Your birthday has been added successfully.
+                ✓ Thank you! Your profile has been added successfully.
             </div>
         </div>
     </div>
@@ -625,7 +639,7 @@
         <div class="modal-content" style="max-width: 900px;">
             <button class="modal-close" onclick="closeModal('admin')">×</button>
             <h2 class="modal-title">Admin Dashboard</h2>
-            <p class="modal-subtitle">Manage birthdays and notifications</p>
+            <p class="modal-subtitle">Manage profiles and notifications</p>
 
             <div class="form-group">
                 <label for="admin-email">Your Email Address</label>
@@ -641,6 +655,14 @@
             <button onclick="sendTestReminder()" class="btn btn-primary" style="margin-top:5px; width:100%;">
               📧 Send Test Reminder Now
                 </button>
+            <div style="display:flex;gap:10px;margin-top:10px;">
+                <button onclick="downloadExcel()" class="btn btn-secondary" style="flex:1;">
+                    📊 Download Excel
+                </button>
+                <button onclick="downloadWord()" class="btn btn-secondary" style="flex:1;">
+                    📄 Download Word
+                </button>
+            </div>
 
             <div class="stats-grid">
                 <div class="stat-card">
@@ -697,19 +719,21 @@
     document.body.style.overflow = 'auto';
   }
 
-  // Submit birthday
+  // Submit profile
   document.getElementById('birthday-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = document.getElementById('name').value.trim();
+    const gender = document.getElementById('gender').value;
+    const contact = document.getElementById('contact').value.trim();
     const birthday = document.getElementById('birthday').value;
 
-    if (!name || !birthday) return alert("Fill all fields");
+    if (!name || !gender || !contact || !birthday) return alert("Please fill all fields");
 
     try {
       await fetch(`${API_BASE}/birthdays`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, birthday })
+        body: JSON.stringify({ name, gender, contact, birthday })
       });
       
       document.getElementById('success-message').style.display = 'block';
@@ -720,7 +744,7 @@
         closeModal('submit');
       }, 2000);
     } catch (err) {
-      alert("Error saving birthday. Try again.");
+      alert("Error saving profile. Try again.");
     }
   });
 
@@ -839,7 +863,7 @@
         <div class="birthday-item">
           <div class="birthday-info">
             <div class="birthday-name">${b.name}</div>
-            <div class="birthday-date">${date}</div>
+            <div class="birthday-date">${date} ${b.gender ? '· ' + b.gender : ''} ${b.contact ? '· ' + b.contact : ''}</div>
           </div>
           <div class="birthday-actions">
             <span class="badge badge-days">${days} days</span>
@@ -868,6 +892,83 @@
       return b.posted && d.getMonth() === today.getMonth();
     });
     document.getElementById('posted-count').textContent = posted.length;
+  }
+
+  // Download all profiles as Excel (CSV)
+  async function downloadExcel() {
+    try {
+      const res = await fetch(`${API_BASE}/birthdays`);
+      const birthdays = await res.json();
+      if (!birthdays || birthdays.length === 0) return alert("No profiles to download yet.");
+
+      const rows = [
+        ["Full Name", "Gender", "Contact", "Birthday", "Posted"],
+        ...birthdays.map(b => [
+          b.name || '',
+          b.gender || '',
+          b.contact || '',
+          b.birthday ? new Date(b.birthday).toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) : '',
+          b.posted ? 'Yes' : 'No'
+        ])
+      ];
+
+      const csv = rows.map(r => r.map(cell => `"${cell}"`).join(",")).join("\n");
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'LivingVoices_Profiles.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      alert("Could not download. Try again.");
+    }
+  }
+
+  // Download all profiles as Word (HTML doc)
+  async function downloadWord() {
+    try {
+      const res = await fetch(`${API_BASE}/birthdays`);
+      const birthdays = await res.json();
+      if (!birthdays || birthdays.length === 0) return alert("No profiles to download yet.");
+
+      const rows = birthdays.map(b => `
+        <tr>
+          <td style="padding:8px;border:1px solid #ccc;">${b.name || ''}</td>
+          <td style="padding:8px;border:1px solid #ccc;">${b.gender || ''}</td>
+          <td style="padding:8px;border:1px solid #ccc;">${b.contact || ''}</td>
+          <td style="padding:8px;border:1px solid #ccc;">${b.birthday ? new Date(b.birthday).toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) : ''}</td>
+          <td style="padding:8px;border:1px solid #ccc;">${b.posted ? 'Yes' : 'No'}</td>
+        </tr>`).join('');
+
+      const html = `
+        <html><head><meta charset="UTF-8"></head><body>
+        <h2 style="color:#c94545;">The Living Voices — Member Profiles</h2>
+        <p style="color:#666;">RCCG Living Water Parish, Kano</p>
+        <table style="border-collapse:collapse;width:100%;font-family:Arial,sans-serif;">
+          <thead>
+            <tr style="background:#c94545;color:white;">
+              <th style="padding:10px;border:1px solid #ccc;">Full Name</th>
+              <th style="padding:10px;border:1px solid #ccc;">Gender</th>
+              <th style="padding:10px;border:1px solid #ccc;">Contact</th>
+              <th style="padding:10px;border:1px solid #ccc;">Birthday</th>
+              <th style="padding:10px;border:1px solid #ccc;">Posted</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+        </body></html>`;
+
+      const blob = new Blob([html], { type: 'application/msword' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'LivingVoices_Profiles.doc';
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      alert("Could not download. Try again.");
+    }
   }
 
   // Add birthday to Google Calendar (repeats yearly)
