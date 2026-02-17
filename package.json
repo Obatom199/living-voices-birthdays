@@ -1,17 +1,9 @@
 {
-  "name": "birthday-reminder-service",
+  "name": "living-voices-birthdays",
   "version": "1.0.0",
-  "description": "Email reminder service for church birthday tracker",
-  "main": "reminder-service.js",
-  "scripts": {
-    "start": "node reminder-service.js",
-    "test": "echo \"No tests yet\""
-  },
+  "private": true,
   "dependencies": {
-    "node-cron": "^3.0.3",
-    "nodemailer": "^6.9.7"
-  },
-  "keywords": ["birthday", "reminder", "email"],
-  "author": "",
-  "license": "MIT"
+    "@netlify/blobs": "^8.1.0",
+    "nodemailer": "^6.9.15"
+  }
 }
