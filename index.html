@@ -628,6 +628,9 @@
             <button onclick="saveSettings()" class="btn btn-primary" style="margin-bottom: 30px;">
                 Save Settings
             </button>
+            <button onclick="sendTestReminder()" class="btn btn-primary" style="margin-top:20px; width:100%;">
+              📧 Send Test Reminder Now
+                </button>
 
             <div class="stats-grid">
                 <div class="stat-card">
@@ -660,272 +663,135 @@
     </div>
 
     <script>
-        // Initialize storage
-        if (!window.storage) {
-            console.error('Storage not available');
-        }
+  // === ALL FUNCTIONS UPDATED FOR NETLIFY ===
 
-        // Modal Functions
-        function openModal(type) {
-            if (type === 'admin') {
-                const password = prompt('Enter admin password:');
-                const correctPassword = 'LivingVoicesKano'; // CHANGE THIS PASSWORD!
-                
-                if (password !== correctPassword) {
-                    alert('Incorrect password. Access denied.');
-                    return;
-                }
-                loadDashboard();
-            }
-            
-            document.getElementById(type + '-modal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+  const API_BASE = "/.netlify/functions";
 
-        function closeModal(type) {
-            document.getElementById(type + '-modal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
+  // Modal functions (keep your original openModal, closeModal, password check)
 
-        // Close modal when clicking outside
-        document.querySelectorAll('.modal-overlay').forEach(overlay => {
-            overlay.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeModal(this.id.replace('-modal', ''));
-                }
-            });
-        });
+  function openModal(type) {
+    if (type === 'admin') {
+      const password = prompt('Enter admin password:');
+      if (password !== 'LivingVoicesKano') {  // CHANGE THIS PASSWORD!
+        alert('Wrong password');
+        return;
+      }
+      loadDashboard();
+    }
+    document.getElementById(type + '-modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
 
-        // Handle birthday form submission
-        document.getElementById('birthday-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const birthday = document.getElementById('birthday').value;
-            
-            try {
-                let birthdays = [];
-                try {
-                    const result = await window.storage.get('birthdays', false);
-                    if (result && result.value) {
-                        birthdays = JSON.parse(result.value);
-                    }
-                } catch (error) {
-                    console.log('No existing birthdays found, starting fresh');
-                }
-                
-                const newBirthday = {
-                    id: Date.now().toString(),
-                    name: name,
-                    birthday: birthday,
-                    posted: false,
-                    createdAt: new Date().toISOString()
-                };
-                
-                birthdays.push(newBirthday);
-                await window.storage.set('birthdays', JSON.stringify(birthdays), false);
-                
-                document.getElementById('success-message').style.display = 'block';
-                document.getElementById('birthday-form').reset();
-                
-                setTimeout(() => {
-                    document.getElementById('success-message').style.display = 'none';
-                    closeModal('submit');
-                }, 2000);
-                
-            } catch (error) {
-                console.error('Error saving birthday:', error);
-                alert('There was an error saving the birthday. Please try again.');
-            }
-        });
+  function closeModal(type) {
+    document.getElementById(type + '-modal').classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
 
-        // Load admin dashboard
-        async function loadDashboard() {
-            try {
-                try {
-                    const emailResult = await window.storage.get('admin-email', false);
-                    if (emailResult && emailResult.value) {
-                        document.getElementById('admin-email').value = emailResult.value;
-                    }
-                } catch (error) {
-                    console.log('No admin email set yet');
-                }
-                
-                try {
-                    const daysResult = await window.storage.get('reminder-days', false);
-                    if (daysResult && daysResult.value) {
-                        document.getElementById('reminder-days').value = daysResult.value;
-                    }
-                } catch (error) {
-                    console.log('No reminder days set yet');
-                }
-                
-                let birthdays = [];
-                try {
-                    const result = await window.storage.get('birthdays', false);
-                    if (result && result.value) {
-                        birthdays = JSON.parse(result.value);
-                    }
-                } catch (error) {
-                    console.log('No birthdays found');
-                }
-                
-                displayBirthdays(birthdays);
-                updateStats(birthdays);
-                checkUpcomingBirthdays(birthdays);
-                
-            } catch (error) {
-                console.error('Error loading dashboard:', error);
-            }
-        }
+  // Submit birthday
+  document.getElementById('birthday-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const birthday = document.getElementById('birthday').value;
 
-        // Calculate days until next birthday
-        function getDaysUntilBirthday(birthday) {
-            const today = new Date();
-            const birthDate = new Date(birthday);
-            const nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
-            
-            if (nextBirthday < today) {
-                nextBirthday.setFullYear(today.getFullYear() + 1);
-            }
-            
-            const diffTime = nextBirthday - today;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
-            return diffDays;
-        }
+    if (!name || !birthday) return alert("Fill all fields");
 
-        // Display birthdays
-        function displayBirthdays(birthdays) {
-            const listContainer = document.getElementById('birthday-list');
-            
-            if (birthdays.length === 0) {
-                listContainer.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">🎂</div>
-                        <div>No birthdays added yet. Share the link with The Living Voices choir members!</div>
-                    </div>
-                `;
-                return;
-            }
-            
-            const sortedBirthdays = birthdays.sort((a, b) => {
-                return getDaysUntilBirthday(a.birthday) - getDaysUntilBirthday(b.birthday);
-            });
-            
-            listContainer.innerHTML = sortedBirthdays.map(birthday => {
-                const daysUntil = getDaysUntilBirthday(birthday.birthday);
-                const birthdayDate = new Date(birthday.birthday);
-                const formattedDate = birthdayDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
-                
-                return `
-                    <div class="birthday-item">
-                        <div class="birthday-info">
-                            <div class="birthday-name">${birthday.name}</div>
-                            <div class="birthday-date">${formattedDate}</div>
-                        </div>
-                        <div class="birthday-actions">
-                            <span class="badge badge-days">${daysUntil} days</span>
-                            ${birthday.posted ? '<span class="badge badge-posted">Posted</span>' : ''}
-                            <button class="small-btn" onclick="togglePosted('${birthday.id}')">
-                                ${birthday.posted ? 'Unmark' : 'Mark Posted'}
-                            </button>
-                            <button class="small-btn delete" onclick="deleteBirthday('${birthday.id}')">Delete</button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
+    try {
+      await fetch(`${API_BASE}/birthdays`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, birthday })
+      });
+      
+      document.getElementById('success-message').style.display = 'block';
+      document.getElementById('birthday-form').reset();
+      
+      setTimeout(() => {
+        document.getElementById('success-message').style.display = 'none';
+        closeModal('submit');
+      }, 2000);
+    } catch (err) {
+      alert("Error saving birthday. Try again.");
+    }
+  });
 
-        // Update statistics
-        function updateStats(birthdays) {
-            document.getElementById('total-birthdays').textContent = birthdays.length;
-            
-            const upcoming = birthdays.filter(b => getDaysUntilBirthday(b.birthday) <= 30);
-            document.getElementById('upcoming-count').textContent = upcoming.length;
-            
-            const thisMonth = birthdays.filter(b => {
-                const bDate = new Date(b.birthday);
-                const today = new Date();
-                return b.posted && bDate.getMonth() === today.getMonth();
-            });
-            document.getElementById('posted-count').textContent = thisMonth.length;
-        }
+  // Load dashboard
+  async function loadDashboard() {
+    try {
+      // Load settings
+      const settingsRes = await fetch(`${API_BASE}/settings`);
+      const settings = await settingsRes.json();
+      document.getElementById('admin-email').value = settings.adminEmail || '';
+      document.getElementById('reminder-days').value = settings.reminderDays || '2';
 
-        // Check for upcoming birthdays
-        function checkUpcomingBirthdays(birthdays) {
-            const upcoming = birthdays.filter(b => {
-                const days = getDaysUntilBirthday(b.birthday);
-                return days <= 7 && days >= 0;
-            });
-            
-            if (upcoming.length > 0) {
-                document.getElementById('upcoming-birthdays-section').style.display = 'block';
-                document.getElementById('upcoming-birthdays-list').innerHTML = upcoming.map(b => {
-                    const days = getDaysUntilBirthday(b.birthday);
-                    const birthDate = new Date(b.birthday);
-                    const formattedDate = birthDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
-                    return `<div style="margin-bottom: 10px;"><strong>${b.name}</strong> - ${formattedDate} (${days} days)</div>`;
-                }).join('');
-            } else {
-                document.getElementById('upcoming-birthdays-section').style.display = 'none';
-            }
-        }
+      // Load birthdays
+      const birthdaysRes = await fetch(`${API_BASE}/birthdays`);
+      const birthdays = await birthdaysRes.json();
+      
+      displayBirthdays(birthdays);
+      updateStats(birthdays);
+      checkUpcomingBirthdays(birthdays);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
-        // Save settings
-        async function saveSettings() {
-            const email = document.getElementById('admin-email').value;
-            const reminderDays = document.getElementById('reminder-days').value;
-            
-            if (!email) {
-                alert('Please enter your email address');
-                return;
-            }
-            
-            try {
-                await window.storage.set('admin-email', email, false);
-                await window.storage.set('reminder-days', reminderDays, false);
-                alert('Settings saved! You will receive email reminders ' + reminderDays + ' days before each birthday.');
-            } catch (error) {
-                console.error('Error saving settings:', error);
-                alert('Error saving settings. Please try again.');
-            }
-        }
+  // Save settings
+  async function saveSettings() {
+    const email = document.getElementById('admin-email').value.trim();
+    const reminderDays = document.getElementById('reminder-days').value;
+    
+    if (!email) return alert("Enter your email");
+    
+    try {
+      await fetch(`${API_BASE}/settings`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ adminEmail: email, reminderDays })
+      });
+      alert(`Settings saved! Reminders will be sent ${reminderDays} days before birthdays.`);
+    } catch (err) {
+      alert("Error saving settings");
+    }
+  }
 
-        // Toggle posted status
-        async function togglePosted(id) {
-            try {
-                const result = await window.storage.get('birthdays', false);
-                let birthdays = JSON.parse(result.value);
-                
-                const birthday = birthdays.find(b => b.id === id);
-                if (birthday) {
-                    birthday.posted = !birthday.posted;
-                    await window.storage.set('birthdays', JSON.stringify(birthdays), false);
-                    loadDashboard();
-                }
-            } catch (error) {
-                console.error('Error toggling posted status:', error);
-            }
-        }
+  // Toggle posted
+  async function togglePosted(id) {
+    try {
+      await fetch(`${API_BASE}/birthdays`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, action: "togglePosted" })
+      });
+      loadDashboard();
+    } catch (err) { console.error(err); }
+  }
 
-        // Delete birthday
-        async function deleteBirthday(id) {
-            if (!confirm('Are you sure you want to delete this birthday?')) {
-                return;
-            }
-            
-            try {
-                const result = await window.storage.get('birthdays', false);
-                let birthdays = JSON.parse(result.value);
-                
-                birthdays = birthdays.filter(b => b.id !== id);
-                await window.storage.set('birthdays', JSON.stringify(birthdays), false);
-                loadDashboard();
-            } catch (error) {
-                console.error('Error deleting birthday:', error);
-            }
-        }
-    </script>
-</body>
-</html>
+  // Delete
+  async function deleteBirthday(id) {
+    if (!confirm("Delete this birthday?")) return;
+    try {
+      await fetch(`${API_BASE}/birthdays`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id })
+      });
+      loadDashboard();
+    } catch (err) { console.error(err); }
+  }
+
+  // Add this button in admin modal (add inside the modal-content, after Save Settings button):
+  // <button onclick="sendTestReminder()" class="btn btn-primary" style="margin-top:20px;">📧 Send Test Reminder Now</button>
+
+  async function sendTestReminder() {
+    try {
+      const res = await fetch(`${API_BASE}/send-reminder`);
+      const data = await res.json();
+      if (data.success) alert(`Reminder sent successfully! (${data.sent} birthdays)`);
+      else alert(data.message || "No reminders to send");
+    } catch (err) {
+      alert("Could not send reminder");
+    }
+  }
+
+  // Keep ALL your other functions unchanged: getDaysUntilBirthday, displayBirthdays, updateStats, checkUpcomingBirthdays
+</script>
