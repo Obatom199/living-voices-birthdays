@@ -87,6 +87,9 @@ exports.handler = async (event) => {
       list.push({
         id: Date.now().toString(),
         name: body.name.trim(),
+        gender: body.gender || '',
+        contact: body.contact ? body.contact.trim() : '',
+        email: body.email ? body.email.trim() : '',
         birthday: body.birthday,
         posted: false,
         createdAt: new Date().toISOString()
