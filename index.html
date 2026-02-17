@@ -529,11 +529,6 @@
             <!-- Left Side - Phone Mockup Placeholder -->
             <div class="mockup-container">
                 <img src="mockup3.png" alt="Birthday Tracker App" style="width: 100%; max-width: 500px; filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.15));">
-                    <div>
-                </div>
-                <!-- To use your own image, replace the mockup-placeholder div above with:
-                <img src="your-phone-image.png" alt="Birthday Tracker App" style="width: 100%; max-width: 500px; filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.15));">
-                -->
             </div>
 
             <!-- Right Side - Content -->
@@ -794,4 +789,91 @@
   }
 
   // Keep ALL your other functions unchanged: getDaysUntilBirthday, displayBirthdays, updateStats, checkUpcomingBirthdays
+
+  // Calculate days until next birthday
+  function getDaysUntilBirthday(birthday) {
+    const today = new Date();
+    const birthDate = new Date(birthday);
+    const nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+    if (nextBirthday < today) nextBirthday.setFullYear(today.getFullYear() + 1);
+    const diffTime = nextBirthday - today;
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  }
+
+  // Display all birthdays in the list
+  function displayBirthdays(birthdays) {
+    const listContainer = document.getElementById('birthday-list');
+
+    if (!birthdays || birthdays.length === 0) {
+      listContainer.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">🎂</div>
+          <div>No birthdays added yet. Share the link with The Living Voices choir members!</div>
+        </div>`;
+      return;
+    }
+
+    const sorted = [...birthdays].sort((a, b) =>
+      getDaysUntilBirthday(a.birthday) - getDaysUntilBirthday(b.birthday)
+    );
+
+    listContainer.innerHTML = sorted.map(b => {
+      const days = getDaysUntilBirthday(b.birthday);
+      const date = new Date(b.birthday).toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+      return `
+        <div class="birthday-item">
+          <div class="birthday-info">
+            <div class="birthday-name">${b.name}</div>
+            <div class="birthday-date">${date}</div>
+          </div>
+          <div class="birthday-actions">
+            <span class="badge badge-days">${days} days</span>
+            ${b.posted ? '<span class="badge badge-posted">Posted ✓</span>' : ''}
+            <button class="small-btn" onclick="togglePosted('${b.id}')">
+              ${b.posted ? 'Unmark' : 'Mark Posted'}
+            </button>
+            <button class="small-btn delete" onclick="deleteBirthday('${b.id}')">Delete</button>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // Update stats cards
+  function updateStats(birthdays) {
+    if (!birthdays) birthdays = [];
+    document.getElementById('total-birthdays').textContent = birthdays.length;
+
+    const upcoming = birthdays.filter(b => getDaysUntilBirthday(b.birthday) <= 30);
+    document.getElementById('upcoming-count').textContent = upcoming.length;
+
+    const today = new Date();
+    const posted = birthdays.filter(b => {
+      const d = new Date(b.birthday);
+      return b.posted && d.getMonth() === today.getMonth();
+    });
+    document.getElementById('posted-count').textContent = posted.length;
+  }
+
+  // Check and show birthdays in the next 7 days
+  function checkUpcomingBirthdays(birthdays) {
+    if (!birthdays) birthdays = [];
+    const upcoming = birthdays.filter(b => {
+      const days = getDaysUntilBirthday(b.birthday);
+      return days <= 7 && days >= 0;
+    });
+
+    const section = document.getElementById('upcoming-birthdays-section');
+    const list = document.getElementById('upcoming-birthdays-list');
+
+    if (upcoming.length > 0) {
+      section.style.display = 'block';
+      list.innerHTML = upcoming.map(b => {
+        const days = getDaysUntilBirthday(b.birthday);
+        const date = new Date(b.birthday).toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+        return `<div style="margin-bottom:10px;"><strong>${b.name}</strong> — ${date} (${days} day${days !== 1 ? 's' : ''})</div>`;
+      }).join('');
+    } else {
+      section.style.display = 'none';
+    }
+  }
 </script>
