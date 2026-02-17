@@ -1,13 +1,26 @@
 const nodemailer = require("nodemailer");
-const { getStore } = require("@netlify/blobs");
+const https = require("https");
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
+function readBin(binId, apiKey) {
+  return new Promise((resolve, reject) => {
+    const options = {
+      hostname: "api.jsonbin.io",
+      path: `/v3/b/${binId}/latest`,
+      method: "GET",
+      headers: { "X-Master-Key": apiKey, "X-Bin-Meta": "false" }
+    };
+    const req = https.request(options, (res) => {
+      let data = "";
+      res.on("data", chunk => data += chunk);
+      res.on("end", () => {
+        try { resolve(JSON.parse(data)); }
+        catch (e) { resolve({}); }
+      });
+    });
+    req.on("error", reject);
+    req.end();
+  });
+}
 
 function getDaysUntilBirthday(birthday) {
   const today = new Date();
@@ -19,18 +32,26 @@ function getDaysUntilBirthday(birthday) {
 }
 
 exports.handler = async () => {
-  try {
-    const birthdaysStore = getStore({ name: "birthdays", consistency: "strong" });
-    const settingsStore  = getStore({ name: "settings",  consistency: "strong" });
+  const API_KEY = process.env.JSONBIN_API_KEY;
+  const BIN_ID  = process.env.JSONBIN_BIN_ID;
 
-    const birthdays = await birthdaysStore.getJSON("list")   || [];
-    const settings  = await settingsStore.getJSON("config")  || { adminEmail: "", reminderDays: "2" };
+  if (!API_KEY || !BIN_ID) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: "Missing JSONBIN_API_KEY or JSONBIN_BIN_ID environment variables" })
+    };
+  }
+
+  try {
+    const store = await readBin(BIN_ID, API_KEY);
+    const birthdays = Array.isArray(store.birthdays) ? store.birthdays : [];
+    const settings  = store.settings || { adminEmail: "", reminderDays: "2" };
 
     const reminderDays = parseInt(settings.reminderDays, 10);
     const adminEmail   = settings.adminEmail;
 
     if (!adminEmail) {
-      return { statusCode: 400, body: JSON.stringify({ error: "Admin email not configured" }) };
+      return { statusCode: 400, body: JSON.stringify({ error: "Admin email not configured. Please save your email in Settings first." }) };
     }
 
     const upcoming = birthdays.filter(b =>
@@ -38,7 +59,7 @@ exports.handler = async () => {
     );
 
     if (upcoming.length === 0) {
-      return { statusCode: 200, body: JSON.stringify({ message: "No birthdays need reminding today" }) };
+      return { statusCode: 200, body: JSON.stringify({ success: false, message: "No birthdays need reminding today" }) };
     }
 
     const birthdayRows = upcoming.map(b => {
@@ -59,7 +80,7 @@ exports.handler = async () => {
     const html = `
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
         <div style="background:linear-gradient(135deg,#c94545 0%,#8b1e1e 100%);padding:30px;text-align:center;color:white;border-radius:12px 12px 0 0;">
-          <h1 style="margin:0;font-size:1.8em;">&#127874; The Living Voices</h1>
+          <h1 style="margin:0;font-size:1.8em;">🎂 The Living Voices</h1>
           <p style="margin:8px 0 4px;font-size:1em;">Birthday Reminder</p>
           <p style="margin:0;font-size:0.85em;opacity:0.9;font-style:italic;">RCCG Living Water Parish, Kano</p>
         </div>
@@ -87,10 +108,18 @@ exports.handler = async () => {
         </div>
       </div>`;
 
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: adminEmail,
-      subject: `&#127874; Living Voices Reminder: ${upcoming.length} birthday${upcoming.length > 1 ? 's' : ''} coming up`,
+      subject: `🎂 Living Voices Reminder: ${upcoming.length} birthday${upcoming.length > 1 ? 's' : ''} coming up`,
       html
     });
 
@@ -98,8 +127,9 @@ exports.handler = async () => {
       statusCode: 200,
       body: JSON.stringify({ success: true, sent: upcoming.length })
     };
+
   } catch (err) {
     console.error(err);
-    return { statusCode: 500, body: JSON.stringify({ error: "Failed to send reminder" }) };
+    return { statusCode: 500, body: JSON.stringify({ error: "Failed to send reminder", detail: err.message }) };
   }
 };
