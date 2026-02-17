@@ -3,9 +3,9 @@
 <!--
     THE LIVING VOICES BIRTHDAY TRACKER
     RCCG Living Water Parish, Kano
-    
+
     IMPORTANT: CHANGE THE ADMIN PASSWORD!
-    Search for "LivingVoices" in this file and replace it with your own secure password.
+    Search for "LivingVoicesKano" in this file and replace it with your own secure password.
 -->
 <head>
     <meta charset="UTF-8">
@@ -13,25 +13,21 @@
     <link rel="icon" type="image/png" href="logo.png">
 
     <!-- WhatsApp / Facebook / Social Media -->
-    <meta property="og:title" content="The Living Voices Profile/Birthday Tracker">
+    <meta property="og:title" content="The Living Voices Hub">
     <meta property="og:description" content="We'll never miss celebrating your special day! Submit your details for the RCCG Living Water Parish Choir.">
-    <meta property="og:image" content="https://livingvoicesbirthday.netlify.app/logo.png">
-    <meta property="og:url" content="https://livingvoicesbirthday.netlify.app">
+    <meta property="og:image" content="https://livingvoiceshub.netlify.app/logo.png">
+    <meta property="og:url" content="https://livingvoiceshub.netlify.app">
     <meta property="og:type" content="website">
 
     <!-- Twitter/X and blogs -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="The Living Voices Profile/Birthday Tracker">
+    <meta name="twitter:title" content="The Living Voices Hub">
     <meta name="twitter:description" content="We'll never miss celebrating your special day! Submit your details for the RCCG Living Water Parish Choir.">
-    <meta name="twitter:image" content="https://livingvoicesbirthday.netlify.app/logo.png">
-    
+    <meta name="twitter:image" content="https://livingvoiceshub.netlify.app/logo.png">
+
     <title>The Living Voices - Choir Hub</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -39,13 +35,8 @@
             min-height: 100vh;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
 
-        /* Hero Section - Two Column Layout */
         .hero-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -55,7 +46,6 @@
             padding: 40px 0;
         }
 
-        /* Left Side - Phone Mockup */
         .mockup-container {
             position: relative;
             display: flex;
@@ -63,27 +53,16 @@
             align-items: center;
         }
 
-        /* Placeholder for your uploaded image */
-        .mockup-placeholder {
+        .mockup-image {
             width: 100%;
             max-width: 500px;
-            aspect-ratio: 3/4;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 18px;
-            text-align: center;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            height: auto;
+            filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.15));
+            border-radius: 20px;
+            display: block;
         }
 
-        /* Right Side - Content */
-        .content-container {
-            padding: 20px;
-        }
+        .content-container { padding: 20px; }
 
         .logo-corner {
             position: absolute;
@@ -95,13 +74,13 @@
         }
 
         .logo-corner img {
-    width: 100%;
-    height: auto;
-    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
-    border-radius: 15px;
-    background: white;
-    padding: 8px;
-}
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
+            border-radius: 15px;
+            background: white;
+            padding: 8px;
+        }
 
         .main-heading {
             font-size: 3.5em;
@@ -118,28 +97,10 @@
             background-clip: text;
         }
 
-        .subtitle {
-            font-size: 1.2em;
-            color: #6c757d;
-            margin-bottom: 40px;
-            line-height: 1.6;
-        }
+        .subtitle { font-size: 1.2em; color: #6c757d; margin-bottom: 30px; line-height: 1.6; }
+        .tagline { font-style: italic; color: #c94545; font-size: 1.1em; margin-bottom: 35px; font-weight: 500; }
 
-        .tagline {
-            font-style: italic;
-            color: #c94545;
-            font-size: 1.1em;
-            margin-bottom: 50px;
-            font-weight: 500;
-        }
-
-        /* Action Buttons */
-        .action-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 400px;
-        }
+        .action-buttons { display: flex; flex-direction: column; gap: 16px; max-width: 420px; }
 
         .btn {
             padding: 18px 40px;
@@ -154,6 +115,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            line-height: 1.2;
         }
 
         .btn-primary {
@@ -162,10 +124,7 @@
             box-shadow: 0 8px 20px rgba(201, 69, 69, 0.3);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(201, 69, 69, 0.4);
-        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(201, 69, 69, 0.4); }
 
         .btn-secondary {
             background: white;
@@ -174,53 +133,27 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
-        .btn-secondary:hover {
-            background: #c94545;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(201, 69, 69, 0.2);
-        }
+        .btn-secondary:hover { background: #c94545; color: white; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(201, 69, 69, 0.2); }
 
-        /* Features Grid */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 60px;
-        }
+        .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 22px; }
 
         .feature-item {
             text-align: center;
-            padding: 20px;
+            padding: 12px 10px;
+            background: #ffffff;
+            border: 1px solid #eef0f2;
+            border-radius: 12px;
         }
 
-        .feature-icon {
-            font-size: 2.5em;
-            margin-bottom: 15px;
-        }
+        .feature-icon { font-size: 1.6em; margin-bottom: 8px; }
+        .feature-title { font-size: 0.8em; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.4px; }
+        .feature-desc { font-size: 0.78em; color: #6c757d; line-height: 1.35; }
 
-        .feature-title {
-            font-size: 1em;
-            font-weight: 600;
-            color: #1a1a2e;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .feature-desc {
-            font-size: 0.9em;
-            color: #6c757d;
-        }
-
-        /* Modal/Tabs */
         .modal-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.5);
             z-index: 1000;
             align-items: center;
@@ -228,9 +161,7 @@
             padding: 20px;
         }
 
-        .modal-overlay.active {
-            display: flex;
-        }
+        .modal-overlay.active { display: flex; }
 
         .modal-content {
             background: white;
@@ -246,15 +177,13 @@
 
         .modal-close {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 20px; right: 20px;
             font-size: 28px;
             color: #6c757d;
             cursor: pointer;
             background: none;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -262,27 +191,11 @@
             transition: all 0.3s;
         }
 
-        .modal-close:hover {
-            background: #f8f9fa;
-            color: #1a1a2e;
-        }
+        .modal-close:hover { background: #f8f9fa; color: #1a1a2e; }
+        .modal-title { font-size: 2em; font-weight: 700; color: #1a1a2e; margin-bottom: 10px; }
+        .modal-subtitle { color: #6c757d; margin-bottom: 30px; }
 
-        .modal-title {
-            font-size: 2em;
-            font-weight: 700;
-            color: #1a1a2e;
-            margin-bottom: 10px;
-        }
-
-        .modal-subtitle {
-            color: #6c757d;
-            margin-bottom: 30px;
-        }
-
-        /* Form Styles */
-        .form-group {
-            margin-bottom: 25px;
-        }
+        .form-group { margin-bottom: 25px; }
 
         label {
             display: block;
@@ -307,11 +220,7 @@
             font-family: inherit;
         }
 
-        input:focus {
-            outline: none;
-            border-color: #c94545;
-            box-shadow: 0 0 0 3px rgba(201, 69, 69, 0.1);
-        }
+        input:focus { outline: none; border-color: #c94545; box-shadow: 0 0 0 3px rgba(201, 69, 69, 0.1); }
 
         .success-message {
             background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
@@ -324,13 +233,7 @@
             border-left: 4px solid #28a745;
         }
 
-        /* Admin Dashboard Styles */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
 
         .stat-card {
             background: linear-gradient(135deg, #c94545 0%, #e74c3c 100%);
@@ -341,22 +244,9 @@
             box-shadow: 0 8px 20px rgba(201, 69, 69, 0.2);
         }
 
-        .stat-number {
-            font-size: 2.5em;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 0.9em;
-            opacity: 0.9;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .birthday-list {
-            margin-top: 30px;
-        }
+        .stat-number { font-size: 2.5em; font-weight: bold; margin-bottom: 5px; }
+        .stat-label { font-size: 0.9em; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px; }
+        .birthday-list { margin-top: 30px; }
 
         .birthday-item {
             background: #f8f9fa;
@@ -370,49 +260,15 @@
             border: 2px solid transparent;
         }
 
-        .birthday-item:hover {
-            border-color: #c94545;
-            transform: translateX(5px);
-        }
+        .birthday-item:hover { border-color: #c94545; transform: translateX(5px); }
+        .birthday-info { flex: 1; }
+        .birthday-name { font-weight: 600; font-size: 18px; color: #1a1a2e; margin-bottom: 5px; }
+        .birthday-date { color: #6c757d; font-size: 14px; }
+        .birthday-actions { display: flex; gap: 10px; align-items: center; }
 
-        .birthday-info {
-            flex: 1;
-        }
-
-        .birthday-name {
-            font-weight: 600;
-            font-size: 18px;
-            color: #1a1a2e;
-            margin-bottom: 5px;
-        }
-
-        .birthday-date {
-            color: #6c757d;
-            font-size: 14px;
-        }
-
-        .birthday-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .badge {
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .badge-days {
-            background: #c94545;
-            color: white;
-        }
-
-        .badge-posted {
-            background: #28a745;
-            color: white;
-        }
+        .badge { padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; }
+        .badge-days { background: #c94545; color: white; }
+        .badge-posted { background: #28a745; color: white; }
 
         .small-btn {
             padding: 8px 16px;
@@ -426,30 +282,12 @@
             font-weight: 500;
         }
 
-        .small-btn:hover {
-            background: #a83939;
-            transform: scale(1.05);
-        }
+        .small-btn:hover { background: #a83939; transform: scale(1.05); }
+        .small-btn.delete { background: #dc3545; }
+        .small-btn.delete:hover { background: #c82333; }
 
-        .small-btn.delete {
-            background: #dc3545;
-        }
-
-        .small-btn.delete:hover {
-            background: #c82333;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #6c757d;
-        }
-
-        .empty-state-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-            opacity: 0.3;
-        }
+        .empty-state { text-align: center; padding: 60px 20px; color: #6c757d; }
+        .empty-state-icon { font-size: 4em; margin-bottom: 20px; opacity: 0.3; }
 
         .upcoming-section {
             background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
@@ -459,117 +297,72 @@
             margin-bottom: 30px;
         }
 
-        .upcoming-section h3 {
-            color: #856404;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .upcoming-section h3 { color: #856404; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
 
-        /* Responsive Design */
         @media (max-width: 968px) {
-            .hero-section {
-                grid-template-columns: 1fr;
-                gap: 40px;
-                text-align: center;
-            }
-
-            .mockup-container {
-                order: 2;
-            }
-
-            .content-container {
-                order: 1;
-            }
-
-            .logo-corner {
-                position: static;
-                margin: 0 auto 30px;
-                width: 150px;
-            }
-
-            .main-heading {
-                font-size: 2.5em;
-            }
-
-            .action-buttons {
-                margin: 0 auto;
-            }
-
-            .features {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
+            .container { padding: 16px; }
+            .hero-section { grid-template-columns: 1fr; text-align: center; min-height: auto; padding: 18px 0; gap: 22px; }
+            .mockup-container { order: 1; margin-top: 8px; }
+            .content-container { order: 2; padding: 0; }
+            .logo-corner { position: static; margin: 0 auto 18px; width: 140px; }
+            .main-heading { font-size: 2.2em; margin-bottom: 14px; }
+            .subtitle { font-size: 1em; margin-bottom: 16px; }
+            .tagline { font-size: 1em; margin-bottom: 18px; }
+            .action-buttons { margin: 0 auto; flex-direction: row; gap: 12px; max-width: 520px; }
+            .action-buttons .btn { flex: 1; padding: 14px 10px; font-size: 14px; border-radius: 12px; }
+            .mockup-image { max-width: 520px; border-radius: 18px; }
+            .features { margin-top: 18px; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+            .feature-item { padding: 12px 8px; }
+            .feature-icon { font-size: 1.4em; margin-bottom: 6px; }
+            .feature-title { font-size: 0.72em; margin-bottom: 0; }
+            .feature-desc { display: none; }
         }
 
         @media (max-width: 576px) {
-            .main-heading {
-                font-size: 2em;
-            }
-
-            .subtitle {
-                font-size: 1em;
-            }
-
-            .modal-content {
-                padding: 30px 20px;
-            }
-
-            .birthday-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-
-            .birthday-actions {
-                width: 100%;
-                flex-wrap: wrap;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
+            .main-heading { font-size: 1.85em; }
+            .action-buttons { flex-wrap: wrap; gap: 10px; }
+            .action-buttons .btn { min-width: 160px; }
+            .modal-content { padding: 30px 20px; }
+            .birthday-item { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .birthday-actions { width: 100%; flex-wrap: wrap; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .features { grid-template-columns: repeat(3, 1fr); gap: 8px; }
         }
     </style>
 </head>
 <body>
-    <!-- Logo in top right corner -->
     <div class="logo-corner">
         <img src="logo.png" alt="The Living Voices Logo">
     </div>
 
     <div class="container">
         <div class="hero-section">
-            <!-- Left Side - Phone Mockup Placeholder -->
             <div class="mockup-container">
-                <img src="mockup3.jpeg" alt="Birthday Tracker App" style="width: 100%; max-width: 500px; filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.15));">
+                <img src="mockup3.jpeg" alt="Living Voices Choir Hub" class="mockup-image">
             </div>
 
-            <!-- Right Side - Content -->
             <div class="content-container">
                 <h1 class="main-heading">
                     <span class="highlight">Living Voices</span><br>
                     Choir Hub 🎼
                 </h1>
-                
+
                 <p class="subtitle">
-                    We'll never miss celebrating you cos you're special to us.  
-                    Please input your birthday so Bro Tomiwa won't forget 😂.
+                    You're welcome to the Profile Management Hub of the Living Water Parish Choir.
+                    We'll never miss celebrating you cos you're special to us 😊.
                 </p>
 
                 <p class="tagline">Courtesy: The RCCG Living Water Parish Choir Excos.</p>
 
                 <div class="action-buttons">
                     <button class="btn btn-primary" onclick="openModal('submit')">
-                        ✔️ Submit Your Profile Details
+                        ✔️ Submit Profile Details
                     </button>
                     <button class="btn btn-secondary" onclick="openModal('admin')">
                         🔐 Admin Dashboard
                     </button>
                 </div>
 
-                <!-- Features -->
                 <div class="features">
                     <div class="feature-item">
                         <div class="feature-icon">✓</div>
@@ -597,7 +390,7 @@
             <button class="modal-close" onclick="closeModal('submit')">×</button>
             <h2 class="modal-title">Submit Your Profile Details 🎂</h2>
             <p class="modal-subtitle">Help us celebrate you as part of The Living Voices family!</p>
-            
+
             <form id="birthday-form">
                 <div class="form-group">
                     <label for="name">Full Name</label>
@@ -617,17 +410,22 @@
                     <label for="contact">Contact Details (Phone / WhatsApp)</label>
                     <input type="text" id="contact" name="contact" required placeholder="e.g. 08012345678">
                 </div>
-                
+
+                <div class="form-group">
+                    <label for="member-email">Email Address <span style="font-weight:400;color:#6c757d;text-transform:none;">(optional — for birthday wishes)</span></label>
+                    <input type="email" id="member-email" name="member-email" placeholder="your.email@example.com">
+                </div>
+
                 <div class="form-group">
                     <label for="birthday">Birthday</label>
                     <input type="date" id="birthday" name="birthday" required>
                 </div>
-                
+
                 <button type="submit" class="btn btn-primary" style="width: 100%;">
                     Submit Profile Details ✔️
                 </button>
             </form>
-            
+
             <div id="success-message" class="success-message">
                 ✓ Thank you! Your profile has been added successfully.
             </div>
@@ -653,8 +451,8 @@
                 Save Settings
             </button>
             <button onclick="sendTestReminder()" class="btn btn-primary" style="margin-top:5px; width:100%;">
-              📧 Send Test Reminder Now
-                </button>
+                📧 Send Test Reminder Now
+            </button>
             <div style="display:flex;gap:10px;margin-top:10px;">
                 <button onclick="downloadExcel()" class="btn btn-secondary" style="flex:1;">
                     📊 Download Excel
@@ -664,10 +462,10 @@
                 </button>
             </div>
 
-            <div class="stats-grid">
+            <div class="stats-grid" style="margin-top:30px;">
                 <div class="stat-card">
                     <div class="stat-number" id="total-birthdays">0</div>
-                    <div class="stat-label">Total Birthdays</div>
+                    <div class="stat-label">Total Members</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" id="upcoming-count">0</div>
@@ -679,343 +477,328 @@
                 </div>
             </div>
 
-            <div id="upcoming-birthdays-section" class="upcoming-section" style="display: none;">
+            <div id="upcoming-birthdays-section" class="upcoming-section" style="display: none; margin-top:20px;">
                 <h3>⚠️ Upcoming Birthdays (Next 7 Days)</h3>
                 <div id="upcoming-birthdays-list"></div>
             </div>
 
-            <h3 style="margin-bottom: 20px; color: #1a1a2e;">All Birthdays</h3>
+            <h3 style="margin-bottom: 20px; margin-top:20px; color: #1a1a2e;">All Members</h3>
             <div id="birthday-list" class="birthday-list">
                 <div class="empty-state">
                     <div class="empty-state-icon">🎂</div>
-                    <div>No birthdays added yet. Share the link with The Living Voices choir members!</div>
+                    <div>No profiles added yet. Share the link with The Living Voices choir members!</div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-  // === ALL FUNCTIONS UPDATED FOR NETLIFY ===
+        const API_BASE = "/.netlify/functions";
 
-  const API_BASE = "/.netlify/functions";
+        function openModal(type) {
+            if (type === 'admin') {
+                const password = prompt('Enter admin password:');
+                if (password !== 'LivingVoicesKano') {
+                    alert('Wrong password');
+                    return;
+                }
+                loadDashboard();
+            }
+            document.getElementById(type + '-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-  // Modal functions (keep your original openModal, closeModal, password check)
+        function closeModal(type) {
+            document.getElementById(type + '-modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
 
-  function openModal(type) {
-    if (type === 'admin') {
-      const password = prompt('Enter admin password:');
-      if (password !== 'LivingVoicesKano') {  // CHANGE THIS PASSWORD!
-        alert('Wrong password');
-        return;
-      }
-      loadDashboard();
-    }
-    document.getElementById(type + '-modal').classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
+        // Submit profile (includes email field)
+        document.getElementById('birthday-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const gender = document.getElementById('gender').value;
+            const contact = document.getElementById('contact').value.trim();
+            const memberEmail = document.getElementById('member-email').value.trim();
+            const birthday = document.getElementById('birthday').value;
 
-  function closeModal(type) {
-    document.getElementById(type + '-modal').classList.remove('active');
-    document.body.style.overflow = 'auto';
-  }
+            if (!name || !gender || !contact || !birthday) return alert("Please fill all required fields");
 
-  // Submit profile
-  document.getElementById('birthday-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const gender = document.getElementById('gender').value;
-    const contact = document.getElementById('contact').value.trim();
-    const birthday = document.getElementById('birthday').value;
+            try {
+                await fetch(`${API_BASE}/birthdays`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, gender, contact, email: memberEmail, birthday })
+                });
 
-    if (!name || !gender || !contact || !birthday) return alert("Please fill all fields");
+                document.getElementById('success-message').style.display = 'block';
+                document.getElementById('birthday-form').reset();
 
-    try {
-      await fetch(`${API_BASE}/birthdays`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, gender, contact, birthday })
-      });
-      
-      document.getElementById('success-message').style.display = 'block';
-      document.getElementById('birthday-form').reset();
-      
-      setTimeout(() => {
-        document.getElementById('success-message').style.display = 'none';
-        closeModal('submit');
-      }, 2000);
-    } catch (err) {
-      alert("Error saving profile. Try again.");
-    }
-  });
+                setTimeout(() => {
+                    document.getElementById('success-message').style.display = 'none';
+                    closeModal('submit');
+                }, 2000);
+            } catch (err) {
+                alert("Error saving profile. Try again.");
+            }
+        });
 
-  // Load dashboard
-  async function loadDashboard() {
-    try {
-      // Load settings
-      const settingsRes = await fetch(`${API_BASE}/settings`);
-      const settings = await settingsRes.json();
-      document.getElementById('admin-email').value = settings.adminEmail || '';
-      document.getElementById('reminder-days').value = settings.reminderDays || '2';
+        // Load dashboard
+        async function loadDashboard() {
+            try {
+                const settingsRes = await fetch(`${API_BASE}/settings`);
+                const settings = await settingsRes.json();
+                document.getElementById('admin-email').value = settings.adminEmail || '';
+                document.getElementById('reminder-days').value = settings.reminderDays || '2';
 
-      // Load birthdays
-      const birthdaysRes = await fetch(`${API_BASE}/birthdays`);
-      const birthdays = await birthdaysRes.json();
-      
-      displayBirthdays(birthdays);
-      updateStats(birthdays);
-      checkUpcomingBirthdays(birthdays);
-    } catch (err) {
-      console.error(err);
-    }
-  }
+                const birthdaysRes = await fetch(`${API_BASE}/birthdays`);
+                const birthdays = await birthdaysRes.json();
 
-  // Save settings
-  async function saveSettings() {
-    const email = document.getElementById('admin-email').value.trim();
-    const reminderDays = document.getElementById('reminder-days').value;
-    
-    if (!email) return alert("Enter your email");
-    
-    try {
-      await fetch(`${API_BASE}/settings`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ adminEmail: email, reminderDays })
-      });
-      alert(`Settings saved! Reminders will be sent ${reminderDays} days before birthdays.`);
-    } catch (err) {
-      alert("Error saving settings");
-    }
-  }
+                displayBirthdays(birthdays);
+                updateStats(birthdays);
+                checkUpcomingBirthdays(birthdays);
+            } catch (err) {
+                console.error(err);
+            }
+        }
 
-  // Toggle posted
-  async function togglePosted(id) {
-    try {
-      await fetch(`${API_BASE}/birthdays`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, action: "togglePosted" })
-      });
-      loadDashboard();
-    } catch (err) { console.error(err); }
-  }
+        // Save settings
+        async function saveSettings() {
+            const email = document.getElementById('admin-email').value.trim();
+            const reminderDays = document.getElementById('reminder-days').value;
+            if (!email) return alert("Enter your email");
+            try {
+                await fetch(`${API_BASE}/settings`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ adminEmail: email, reminderDays })
+                });
+                alert(`Settings saved! Reminders will be sent ${reminderDays} days before birthdays.`);
+            } catch (err) {
+                alert("Error saving settings");
+            }
+        }
 
-  // Delete
-  async function deleteBirthday(id) {
-    if (!confirm("Delete this birthday?")) return;
-    try {
-      await fetch(`${API_BASE}/birthdays`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id })
-      });
-      loadDashboard();
-    } catch (err) { console.error(err); }
-  }
+        // Toggle posted
+        async function togglePosted(id) {
+            try {
+                await fetch(`${API_BASE}/birthdays`, {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ id, action: "togglePosted" })
+                });
+                loadDashboard();
+            } catch (err) { console.error(err); }
+        }
 
-  // Add this button in admin modal (add inside the modal-content, after Save Settings button):
-  // <button onclick="sendTestReminder()" class="btn btn-primary" style="margin-top:20px;">📧 Send Test Reminder Now</button>
+        // Delete
+        async function deleteBirthday(id) {
+            if (!confirm("Delete this profile?")) return;
+            try {
+                await fetch(`${API_BASE}/birthdays`, {
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ id })
+                });
+                loadDashboard();
+            } catch (err) { console.error(err); }
+        }
 
-  async function sendTestReminder() {
-    try {
-      const res = await fetch(`${API_BASE}/send-reminder`);
-      const data = await res.json();
-      if (data.success) alert(`Reminder sent successfully! (${data.sent} birthdays)`);
-      else alert(data.message || "No reminders to send");
-    } catch (err) {
-      alert("Could not send reminder");
-    }
-  }
+        // Send test reminder
+        async function sendTestReminder() {
+            try {
+                const res = await fetch(`${API_BASE}/send-reminder`);
+                const data = await res.json();
+                if (data.success) alert(`Reminder sent successfully! (${data.sent} birthdays)`);
+                else alert(data.message || "No reminders to send");
+            } catch (err) {
+                alert("Could not send reminder");
+            }
+        }
 
-  // Keep ALL your other functions unchanged: getDaysUntilBirthday, displayBirthdays, updateStats, checkUpcomingBirthdays
+        // Days until birthday
+        function getDaysUntilBirthday(birthday) {
+            const today = new Date();
+            const birthDate = new Date(birthday);
+            const nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+            if (nextBirthday < today) nextBirthday.setFullYear(today.getFullYear() + 1);
+            return Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
+        }
 
-  // Calculate days until next birthday
-  function getDaysUntilBirthday(birthday) {
-    const today = new Date();
-    const birthDate = new Date(birthday);
-    const nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
-    if (nextBirthday < today) nextBirthday.setFullYear(today.getFullYear() + 1);
-    const diffTime = nextBirthday - today;
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  }
+        // Display all profiles
+        function displayBirthdays(birthdays) {
+            const listContainer = document.getElementById('birthday-list');
 
-  // Display all birthdays in the list
-  function displayBirthdays(birthdays) {
-    const listContainer = document.getElementById('birthday-list');
+            if (!birthdays || birthdays.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🎂</div>
+                        <div>No profiles added yet. Share the link with The Living Voices choir members!</div>
+                    </div>`;
+                return;
+            }
 
-    if (!birthdays || birthdays.length === 0) {
-      listContainer.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-state-icon">🎂</div>
-          <div>No birthdays added yet. Share the link with The Living Voices choir members!</div>
-        </div>`;
-      return;
-    }
+            const sorted = [...birthdays].sort((a, b) =>
+                getDaysUntilBirthday(a.birthday) - getDaysUntilBirthday(b.birthday)
+            );
 
-    const sorted = [...birthdays].sort((a, b) =>
-      getDaysUntilBirthday(a.birthday) - getDaysUntilBirthday(b.birthday)
-    );
+            listContainer.innerHTML = sorted.map(b => {
+                const days = getDaysUntilBirthday(b.birthday);
+                const date = new Date(b.birthday).toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+                const emailBadge = b.email ? `<span style="font-size:12px;color:#28a745;">✉ ${b.email}</span>` : '';
+                return `
+                    <div class="birthday-item">
+                        <div class="birthday-info">
+                            <div class="birthday-name">${b.name}</div>
+                            <div class="birthday-date">${date} ${b.gender ? '· ' + b.gender : ''} ${b.contact ? '· ' + b.contact : ''}</div>
+                            ${emailBadge}
+                        </div>
+                        <div class="birthday-actions">
+                            <span class="badge badge-days">${days} days</span>
+                            ${b.posted ? '<span class="badge badge-posted">Posted ✓</span>' : ''}
+                            <button class="small-btn" onclick="togglePosted('${b.id}')">
+                                ${b.posted ? 'Unmark' : 'Mark Posted'}
+                            </button>
+                            <button class="small-btn" onclick="addToCalendar('${b.name}', '${b.birthday}')">📅 Calendar</button>
+                            <button class="small-btn delete" onclick="deleteBirthday('${b.id}')">Delete</button>
+                        </div>
+                    </div>`;
+            }).join('');
+        }
 
-    listContainer.innerHTML = sorted.map(b => {
-      const days = getDaysUntilBirthday(b.birthday);
-      const date = new Date(b.birthday).toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
-      return `
-        <div class="birthday-item">
-          <div class="birthday-info">
-            <div class="birthday-name">${b.name}</div>
-            <div class="birthday-date">${date} ${b.gender ? '· ' + b.gender : ''} ${b.contact ? '· ' + b.contact : ''}</div>
-          </div>
-          <div class="birthday-actions">
-            <span class="badge badge-days">${days} days</span>
-            ${b.posted ? '<span class="badge badge-posted">Posted ✓</span>' : ''}
-            <button class="small-btn" onclick="togglePosted('${b.id}')">
-              ${b.posted ? 'Unmark' : 'Mark Posted'}
-            </button>
-            <button class="small-btn" onclick="addToCalendar('${b.name}', '${b.birthday}')">📅 Calendar</button>
-            <button class="small-btn delete" onclick="deleteBirthday('${b.id}')">Delete</button>
-          </div>
-        </div>`;
-    }).join('');
-  }
+        // Update stats
+        function updateStats(birthdays) {
+            if (!birthdays) birthdays = [];
+            document.getElementById('total-birthdays').textContent = birthdays.length;
+            const upcoming = birthdays.filter(b => getDaysUntilBirthday(b.birthday) <= 30);
+            document.getElementById('upcoming-count').textContent = upcoming.length;
+            const today = new Date();
+            const posted = birthdays.filter(b => {
+                const d = new Date(b.birthday);
+                return b.posted && d.getMonth() === today.getMonth();
+            });
+            document.getElementById('posted-count').textContent = posted.length;
+        }
 
-  // Update stats cards
-  function updateStats(birthdays) {
-    if (!birthdays) birthdays = [];
-    document.getElementById('total-birthdays').textContent = birthdays.length;
+        // Download Excel (CSV)
+        async function downloadExcel() {
+            try {
+                const res = await fetch(`${API_BASE}/birthdays`);
+                const birthdays = await res.json();
+                if (!birthdays || birthdays.length === 0) return alert("No profiles to download yet.");
 
-    const upcoming = birthdays.filter(b => getDaysUntilBirthday(b.birthday) <= 30);
-    document.getElementById('upcoming-count').textContent = upcoming.length;
+                const rows = [
+                    ["Full Name", "Gender", "Contact", "Email", "Birthday", "Posted"],
+                    ...birthdays.map(b => [
+                        b.name || '',
+                        b.gender || '',
+                        b.contact || '',
+                        b.email || '',
+                        b.birthday ? new Date(b.birthday).toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) : '',
+                        b.posted ? 'Yes' : 'No'
+                    ])
+                ];
 
-    const today = new Date();
-    const posted = birthdays.filter(b => {
-      const d = new Date(b.birthday);
-      return b.posted && d.getMonth() === today.getMonth();
-    });
-    document.getElementById('posted-count').textContent = posted.length;
-  }
+                const csv = rows.map(r => r.map(cell => `"${cell}"`).join(",")).join("\n");
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'LivingVoices_Profiles.csv';
+                a.click();
+                URL.revokeObjectURL(url);
+            } catch (err) {
+                alert("Could not download. Try again.");
+            }
+        }
 
-  // Download all profiles as Excel (CSV)
-  async function downloadExcel() {
-    try {
-      const res = await fetch(`${API_BASE}/birthdays`);
-      const birthdays = await res.json();
-      if (!birthdays || birthdays.length === 0) return alert("No profiles to download yet.");
+        // Download Word (DOC)
+        async function downloadWord() {
+            try {
+                const res = await fetch(`${API_BASE}/birthdays`);
+                const birthdays = await res.json();
+                if (!birthdays || birthdays.length === 0) return alert("No profiles to download yet.");
 
-      const rows = [
-        ["Full Name", "Gender", "Contact", "Birthday", "Posted"],
-        ...birthdays.map(b => [
-          b.name || '',
-          b.gender || '',
-          b.contact || '',
-          b.birthday ? new Date(b.birthday).toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) : '',
-          b.posted ? 'Yes' : 'No'
-        ])
-      ];
+                const rows = birthdays.map(b => `
+                    <tr>
+                        <td style="padding:8px;border:1px solid #ccc;">${b.name || ''}</td>
+                        <td style="padding:8px;border:1px solid #ccc;">${b.gender || ''}</td>
+                        <td style="padding:8px;border:1px solid #ccc;">${b.contact || ''}</td>
+                        <td style="padding:8px;border:1px solid #ccc;">${b.email || ''}</td>
+                        <td style="padding:8px;border:1px solid #ccc;">${b.birthday ? new Date(b.birthday).toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) : ''}</td>
+                        <td style="padding:8px;border:1px solid #ccc;">${b.posted ? 'Yes' : 'No'}</td>
+                    </tr>`).join('');
 
-      const csv = rows.map(r => r.map(cell => `"${cell}"`).join(",")).join("\n");
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'LivingVoices_Profiles.csv';
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      alert("Could not download. Try again.");
-    }
-  }
+                const html = `
+                    <html><head><meta charset="UTF-8"></head><body>
+                    <h2 style="color:#c94545;">The Living Voices — Member Profiles</h2>
+                    <p style="color:#666;">RCCG Living Water Parish, Kano</p>
+                    <table style="border-collapse:collapse;width:100%;font-family:Arial,sans-serif;">
+                        <thead>
+                            <tr style="background:#c94545;color:white;">
+                                <th style="padding:10px;border:1px solid #ccc;">Full Name</th>
+                                <th style="padding:10px;border:1px solid #ccc;">Gender</th>
+                                <th style="padding:10px;border:1px solid #ccc;">Contact</th>
+                                <th style="padding:10px;border:1px solid #ccc;">Email</th>
+                                <th style="padding:10px;border:1px solid #ccc;">Birthday</th>
+                                <th style="padding:10px;border:1px solid #ccc;">Posted</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                    </body></html>`;
 
-  // Download all profiles as Word (HTML doc)
-  async function downloadWord() {
-    try {
-      const res = await fetch(`${API_BASE}/birthdays`);
-      const birthdays = await res.json();
-      if (!birthdays || birthdays.length === 0) return alert("No profiles to download yet.");
+                const blob = new Blob([html], { type: 'application/msword' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'LivingVoices_Profiles.doc';
+                a.click();
+                URL.revokeObjectURL(url);
+            } catch (err) {
+                alert("Could not download. Try again.");
+            }
+        }
 
-      const rows = birthdays.map(b => `
-        <tr>
-          <td style="padding:8px;border:1px solid #ccc;">${b.name || ''}</td>
-          <td style="padding:8px;border:1px solid #ccc;">${b.gender || ''}</td>
-          <td style="padding:8px;border:1px solid #ccc;">${b.contact || ''}</td>
-          <td style="padding:8px;border:1px solid #ccc;">${b.birthday ? new Date(b.birthday).toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) : ''}</td>
-          <td style="padding:8px;border:1px solid #ccc;">${b.posted ? 'Yes' : 'No'}</td>
-        </tr>`).join('');
+        // Add to Google Calendar
+        function addToCalendar(name, birthday) {
+            const birth = new Date(birthday);
+            const today = new Date();
+            let year = today.getFullYear();
+            const next = new Date(year, birth.getMonth(), birth.getDate());
+            if (next < today) year += 1;
+            const pad = n => String(n).padStart(2, '0');
+            const month = pad(birth.getMonth() + 1);
+            const day = pad(birth.getDate());
+            const nextDay = pad(birth.getDate() + 1);
+            const dateStr = `${year}${month}${day}`;
+            const endStr = `${year}${month}${nextDay}`;
+            const title = encodeURIComponent(`🎂 ${name}'s Birthday`);
+            const details = encodeURIComponent(`Don't forget to celebrate ${name}'s birthday! - The Living Voices, RCCG Living Water Parish Kano`);
+            const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dateStr}/${endStr}&details=${details}&recur=RRULE:FREQ=YEARLY`;
+            window.open(url, '_blank');
+        }
 
-      const html = `
-        <html><head><meta charset="UTF-8"></head><body>
-        <h2 style="color:#c94545;">The Living Voices — Member Profiles</h2>
-        <p style="color:#666;">RCCG Living Water Parish, Kano</p>
-        <table style="border-collapse:collapse;width:100%;font-family:Arial,sans-serif;">
-          <thead>
-            <tr style="background:#c94545;color:white;">
-              <th style="padding:10px;border:1px solid #ccc;">Full Name</th>
-              <th style="padding:10px;border:1px solid #ccc;">Gender</th>
-              <th style="padding:10px;border:1px solid #ccc;">Contact</th>
-              <th style="padding:10px;border:1px solid #ccc;">Birthday</th>
-              <th style="padding:10px;border:1px solid #ccc;">Posted</th>
-            </tr>
-          </thead>
-          <tbody>${rows}</tbody>
-        </table>
-        </body></html>`;
-
-      const blob = new Blob([html], { type: 'application/msword' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'LivingVoices_Profiles.doc';
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      alert("Could not download. Try again.");
-    }
-  }
-
-  // Add birthday to Google Calendar (repeats yearly)
-  function addToCalendar(name, birthday) {
-    const birth = new Date(birthday);
-    const today = new Date();
-
-    // Find the next upcoming birthday year
-    let year = today.getFullYear();
-    const next = new Date(year, birth.getMonth(), birth.getDate());
-    if (next < today) year += 1;
-
-    // Format dates as YYYYMMDD for Google Calendar
-    const pad = n => String(n).padStart(2, '0');
-    const month = pad(birth.getMonth() + 1);
-    const day = pad(birth.getDate());
-    const nextDay = pad(birth.getDate() + 1);
-    const dateStr = `${year}${month}${day}`;
-    const endStr = `${year}${month}${nextDay}`;
-
-    const title = encodeURIComponent(`🎂 ${name}'s Birthday`);
-    const details = encodeURIComponent(`Don't forget to celebrate ${name}'s birthday! - The Living Voices, RCCG Living Water Parish Kano`);
-
-    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dateStr}/${endStr}&details=${details}&recur=RRULE:FREQ=YEARLY`;
-    window.open(url, '_blank');
-  }
-
-  // Check and show birthdays in the next 7 days
-  function checkUpcomingBirthdays(birthdays) {
-    if (!birthdays) birthdays = [];
-    const upcoming = birthdays.filter(b => {
-      const days = getDaysUntilBirthday(b.birthday);
-      return days <= 7 && days >= 0;
-    });
-
-    const section = document.getElementById('upcoming-birthdays-section');
-    const list = document.getElementById('upcoming-birthdays-list');
-
-    if (upcoming.length > 0) {
-      section.style.display = 'block';
-      list.innerHTML = upcoming.map(b => {
-        const days = getDaysUntilBirthday(b.birthday);
-        const date = new Date(b.birthday).toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
-        return `<div style="margin-bottom:10px;"><strong>${b.name}</strong> — ${date} (${days} day${days !== 1 ? 's' : ''})</div>`;
-      }).join('');
-    } else {
-      section.style.display = 'none';
-    }
-  }
-</script>
+        // Check upcoming birthdays (next 7 days)
+        function checkUpcomingBirthdays(birthdays) {
+            if (!birthdays) birthdays = [];
+            const upcoming = birthdays.filter(b => {
+                const days = getDaysUntilBirthday(b.birthday);
+                return days <= 7 && days >= 0;
+            });
+            const section = document.getElementById('upcoming-birthdays-section');
+            const list = document.getElementById('upcoming-birthdays-list');
+            if (upcoming.length > 0) {
+                section.style.display = 'block';
+                list.innerHTML = upcoming.map(b => {
+                    const days = getDaysUntilBirthday(b.birthday);
+                    const date = new Date(b.birthday).toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+                    return `<div style="margin-bottom:10px;"><strong>${b.name}</strong> — ${date} (${days} day${days !== 1 ? 's' : ''})</div>`;
+                }).join('');
+            } else {
+                section.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
