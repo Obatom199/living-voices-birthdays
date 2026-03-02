@@ -1,10 +1,12 @@
-// netlify/functions/upload-song.js
+// Required: npm install @netlify/blobs busboy --save
+// (run this in your project root, then git add/commit/push)
+
 import { getStore } from '@netlify/blobs';
 import Busboy from 'busboy';
 
 export default async (req) => {
   if (req.method !== 'POST') {
-    return new Response('Method not allowed', { status: 405 });
+    return new Response('Method Not Allowed', { status: 405 });
   }
 
   const store = getStore({ name: 'choir-songs', consistency: 'strong' });
@@ -12,49 +14,72 @@ export default async (req) => {
   return new Promise((resolve) => {
     const bb = Busboy({ headers: req.headers });
     let month = '';
-    const uploads = [];
+    const uploadedFiles = [];
 
-    bb.on('field', (fieldname, val) => {
-      if (fieldname === 'month') month = val;
+    bb.on('field', (name, value) => {
+      if (name === 'month') month = value.trim();
     });
 
-    bb.on('file', async (fieldname, file, filename, encoding, mimetype) => {
-      if (!mimetype.startsWith('audio/mpeg')) {
-        file.resume(); // drain and ignore invalid
+    bb.on('file', (fieldname, file, filename) => {
+      if (!filename || !filename.toLowerCase().endsWith('.mp3')) {
+        file.resume(); // ignore non-mp3
         return;
       }
 
       const chunks = [];
-      file.on('data', chunk => chunks.push(chunk));
+      file.on('data', (chunk) => chunks.push(chunk));
       file.on('end', async () => {
-        const buffer = Buffer.concat(chunks);
-        const key = `${month}/${fieldname}.mp3`;
-        await store.set(key, buffer, {
-          contentType: 'audio/mpeg'
-        });
-        uploads.push({ sunday: fieldname, key });
+        try {
+          const buffer = Buffer.concat(chunks);
+          const key = `${month}/${fieldname}.mp3`;
+
+          await store.set(key, buffer, {
+            contentType: 'audio/mpeg',
+          });
+
+          uploadedFiles.push({ fieldname, key });
+        } catch (e) {
+          console.error('Blob upload error:', e);
+        }
       });
     });
 
-    bb.on('finish', async () => {
-      if (!month || uploads.length === 0) {
-        return resolve(new Response(JSON.stringify({ error: 'Missing data' }), { status: 400 }));
+    bb.on('finish', () => {
+      if (!month || uploadedFiles.length === 0) {
+        return resolve(
+          new Response(JSON.stringify({ error: 'No valid files or month provided' }), {
+            status: 400,
+            headers: { 'Content-Type': 'application/json' },
+          })
+        );
       }
-      // Optional: return list of public URLs
-      const urls = {};
-      for (const u of uploads) {
-        const { url } = await store.getPublicUrl(u.key); // or use signed if private
-        urls[u.sunday] = url;
-      }
-      resolve(new Response(JSON.stringify({ success: true, urls }), { status: 200 }));
+
+      resolve(
+        new Response(
+          JSON.stringify({
+            success: true,
+            uploaded: uploadedFiles.map(f => f.fieldname),
+          }),
+          {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+          }
+        )
+      );
     });
 
-    bb.on('error', err => {
-      resolve(new Response(JSON.stringify({ error: err.message }), { status: 500 }));
+    bb.on('error', (err) => {
+      console.error('Busboy error:', err);
+      resolve(
+        new Response(JSON.stringify({ error: 'Upload processing failed' }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        })
+      );
     });
 
     req.pipe(bb);
   });
 };
 
-export const config = { path: "/upload-song" };
+export const config = { path: '/upload-song' };
